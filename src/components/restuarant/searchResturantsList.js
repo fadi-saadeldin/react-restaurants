@@ -15,11 +15,9 @@ class SearchResturantsList extends Component {
     sortValue: "",
     RestaurantsListResults: []
   }
-  componentWillMount() {
-    // this.props.getRestaurantsList();
-  }
-  componentDidMount() {
-    this.props.getRestaurantsList();
+ 
+   componentDidMount() {
+     this.props.getRestaurantsList();
 
     filterValue="";
     sortValue="";
@@ -41,6 +39,7 @@ class SearchResturantsList extends Component {
 
     }
   }
+  // get restuarats gategoris 
   getCategories(restaurantsList) {
     let categories = [];
     restaurantsList.map((restuarant, i) =>
@@ -114,10 +113,8 @@ class SearchResturantsList extends Component {
     if (value === 'rating') {
       this.setState({ RestaurantsListResults: _.sortBy(this.props.restaurantsList, 'rating.average').reverse() })
     } else if (value === 'comments') {
-      console.log(this.props.restaurantsList)
       this.setState({ RestaurantsListResults: _.sortBy(this.props.restaurantsList, 'address.comments').reverse() })
     }
-
     let search_value = this.props.history.location.search.includes("category")
     if (search_value) {
       this.props.history.push('/restaurants?category=' + filterValue + '&sortby=' + value);
