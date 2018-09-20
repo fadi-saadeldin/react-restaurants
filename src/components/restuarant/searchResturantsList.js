@@ -16,9 +16,13 @@ class SearchResturantsList extends Component {
     RestaurantsListResults: []
   }
   componentWillMount() {
-    this.props.getRestaurantsList();
+    // this.props.getRestaurantsList();
   }
   componentDidMount() {
+    this.props.getRestaurantsList();
+
+    filterValue="";
+    sortValue="";
     const search_values = queryString.parse(this.props.location.search);
     if (search_values.category) {
       this.onSearchFilter(search_values.category);
@@ -32,6 +36,9 @@ class SearchResturantsList extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.restaurantsList.length > 0) {
       this.getCategories(nextProps.restaurantsList);
+    }else{
+      this.props.getRestaurantsList();
+
     }
   }
   getCategories(restaurantsList) {
@@ -82,6 +89,7 @@ class SearchResturantsList extends Component {
     sortValue = event.target.value;
     if (event.target.value === 'rating') {
       this.setState({ sortValue: 'rating' });
+    
       this.setState({ RestaurantsListResults: _.sortBy(this.state.RestaurantsListResults, 'rating.average').reverse() })
     } else if (event.target.value === 'comments') {
       this.setState({ sortValue: 'comments' });
@@ -91,7 +99,12 @@ class SearchResturantsList extends Component {
     if (search_value) {
       this.props.history.push('/restaurants?category=' + filterValue + '&sortby=' + event.target.value);
     } else {
-      this.props.history.push('/restaurants?sortby=' + event.target.value)
+      if(event.target.value!="sortby"){
+        this.props.history.push('/restaurants?sortby=' + event.target.value)
+
+      }else{
+        sortValue=""
+      }
     }
   }
 
@@ -99,9 +112,10 @@ class SearchResturantsList extends Component {
   onSearchSort(value) {
     sortValue = value;
     if (value === 'rating') {
-      this.setState({ RestaurantsListResults: _.sortBy(this.props.RestaurantsListResults, 'rating.average').reverse() })
+      this.setState({ RestaurantsListResults: _.sortBy(this.props.restaurantsList, 'rating.average').reverse() })
     } else if (value === 'comments') {
-      this.setState({ RestaurantsListResults: _.sortBy(this.props.RestaurantsListResults, 'address.comments').reverse() })
+      console.log(this.props.restaurantsList)
+      this.setState({ RestaurantsListResults: _.sortBy(this.props.restaurantsList, 'address.comments').reverse() })
     }
 
     let search_value = this.props.history.location.search.includes("category")
@@ -159,7 +173,6 @@ class SearchResturantsList extends Component {
 }
 SearchResturantsList.propTypes = {
   getRestaurantsList: PropTypes.func.isRequired,
-  restaurantsList: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = ({ restuarants }) => {

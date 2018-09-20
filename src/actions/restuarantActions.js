@@ -16,7 +16,6 @@ export const getAuthToken = () =>
       .then(res => {
         localStorage.setItem('token', res.data.token);
         // Set token to Auth header
-        setAuthToken(res.data.token);
         // get restuatants list
         dispatch(getRestaurantsList());
       })

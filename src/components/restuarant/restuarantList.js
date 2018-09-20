@@ -1,7 +1,10 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
 import RestuarantListItem from './restuarantListItem';
+import { getRestaurantsList } from '../../actions';
 
 class RestuarantList extends Component {
   state = {
@@ -9,8 +12,10 @@ class RestuarantList extends Component {
     filterValue: "",
     sortValue: ""
   }
+  componentDidMount() {
+    this.props.getRestaurantsList();
+  }
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if (nextProps.restaurantsList.length > 0) {
       this.getCategories(nextProps.restaurantsList)
     }
@@ -43,15 +48,14 @@ class RestuarantList extends Component {
   }
 
   onSortChange(event) {
+    console.log(this.props.restaurantsList);
     this.setState({ sortValue: event.target.value });
     if (event.target.value === 'rating') {
       this.props.history.push(
-        'restaurants?sortby=' + event.target.value,
-        {
+        'restaurants?sortby=' + event.target.value,{
           filterSearchValue: event.target.value,
           sortSearchValue: event.target.value,
-          RestaurantsListResults: _.sortBy(this.props.restaurantsList, 'rating.average').reverse()
-        })
+          RestaurantsListResults: _.sortBy(this.props.restaurantsList, 'rating.average').reverse()})
 
     } else if (event.target.value === 'comments') {
       console.log(_.sortBy(this.props.restaurantsList, 'address.comments').reverse())
@@ -102,5 +106,10 @@ class RestuarantList extends Component {
   }
 }
 
-export default withRouter(RestuarantList);
+const mapStateToProps = ({ restuarants }) => {
+  const { restaurantsList, Loading } = restuarants;
+  return { restaurantsList, Loading };
+
+};
+export default withRouter(connect(mapStateToProps, { getRestaurantsList })(RestuarantList));
 
