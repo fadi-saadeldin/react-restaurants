@@ -12,14 +12,17 @@ class RestuarantList extends Component {
     filterValue: "",
     sortValue: ""
   }
+
   componentDidMount() {
     this.props.getRestaurantsList();
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.restaurantsList.length > 0) {
       this.getCategories(nextProps.restaurantsList)
     }
   }
+  // get categories from restuarants list
   getCategories(restaurantsList) {
     let categories = [];
     restaurantsList.map((restuarant, i) =>
@@ -30,42 +33,26 @@ class RestuarantList extends Component {
     )
     this.setState({ categoriesList: _.uniq(categories) })
   }
-
-
+ 
+// on chnage categories filter
   onFilterChange(event) {
     let filtered_restuarants = [];
     this.setState({ filterValue: event.target.value });
-
     filtered_restuarants = _.filter(this.props.restaurantsList, function (p) {
       return _.includes(event.target.value, p.general.categories);
     });
-    this.props.history.push('restaurants?category=' + event.target.value,
-      {
-        filterSearchValue: event.target.value,
-        restaurantsList: this.props.restaurantsList,
-        RestaurantsListResults: filtered_restuarants
-      })
+    this.props.history.push('restaurants?category=' + event.target.value)
   }
-
+// on change sort by filter
   onSortChange(event) {
     console.log(this.props.restaurantsList);
     this.setState({ sortValue: event.target.value });
     if (event.target.value === 'rating') {
       this.props.history.push(
-        'restaurants?sortby=' + event.target.value,{
-          filterSearchValue: event.target.value,
-          sortSearchValue: event.target.value,
-          RestaurantsListResults: _.sortBy(this.props.restaurantsList, 'rating.average').reverse()})
+        'restaurants?sortby=' + event.target.value)
 
     } else if (event.target.value === 'comments') {
-      console.log(_.sortBy(this.props.restaurantsList, 'address.comments').reverse())
-      this.props.history.push(
-        'restaurants?sortby=' + event.target.value,
-        {
-          sortSearchValue: event.target.value,
-          restaurantsList: this.props.restaurantsList,
-          RestaurantsListResults: _.sortBy(this.props.restaurantsList, 'address.comments').reverse()
-        })
+      this.props.history.push('restaurants?sortby=' + event.target.value)
     }
   }
 

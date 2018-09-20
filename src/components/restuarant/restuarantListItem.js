@@ -11,8 +11,7 @@ class RestuarantListItem extends Component {
     return (
       <li
         className='restuarant-item'
-        onClick={() => this.onRestaurantPress(id)}
-      >
+        onClick={() => this.onRestaurantPress(id)}>
         <div className="row ">
           <div className="col-md-3">
             <img 
