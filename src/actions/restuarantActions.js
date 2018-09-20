@@ -14,6 +14,7 @@ export const getAuthToken = () =>
     axios
       .get(API_URL + '/auth')
       .then(res => {
+        localStorage.setItem('token', res.data.token);
         // Set token to Auth header
         setAuthToken(res.data.token);
         // get restuatants list
@@ -25,13 +26,17 @@ export const getAuthToken = () =>
 
 // Get Retaurants List
 export const getRestaurantsList = () =>
+
   dispatch => {
     dispatch({ type: SPINNER_LOADING });
+    let token= localStorage.getItem('token');
+
     axios
-      .get(API_URL + '/restaurants')
+      .get(API_URL + '/restaurants',
+      {headers: {'token': token}
+    })
       .then(res => {
-        console.log(res.data.data)
-        // get restaurats list results
+      // get restaurats list results
         dispatch({
           type: RESTAURANTS_LIST_RESULTS,
           payload: res.data.data
@@ -41,24 +46,30 @@ export const getRestaurantsList = () =>
       );
   };
 
-// Get retautant details
-export const getRestaurantDetails = (id) =>
-  dispatch => {
-    dispatch({ type: CLEAR_RESTAURANT_DETAILS });
-    axios
-      .get(API_URL + '/restaurant/' + id)
-      .then(res => {
-        console.log(res.data.data)
-        // get restaurats list results
-        dispatch({
-          type: RESTAURANT_DETAILS,
-          payload: res.data.data
-        })
-      })
-      .catch(err => console.log(err)
-      );
-  };
 
+
+// Get Restuarant
+export const getRestaurantDetails = id => dispatch => {
+ dispatch({ type: CLEAR_RESTAURANT_DETAILS });
+ let token= localStorage.getItem('token');
+  axios
+    .get(API_URL+`/restaurants/${id}`,
+    {headers: {'token': token}
+  }
+  )
+    .then(res =>
+      dispatch({
+        type: RESTAURANT_DETAILS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: RESTAURANT_DETAILS,
+        payload: []
+      })
+    );
+};
 
 
 

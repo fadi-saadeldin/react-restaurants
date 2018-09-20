@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 class Navbar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+      <nav className="navbar navbar-expand-sm mb-4">
         <div className="container">
           <div className="row">
-            <Link className="navbar-brand col-md-3" to="/">
-              React Restaurants
+            <Link className="navbar-brand col-md-3 " to="/">
+                <div className="app-logo"/>
             </Link>
           </div>
         </div>
@@ -17,9 +16,5 @@ class Navbar extends Component {
     );
   }
 }
-
-
-
-
 
 export default Navbar;

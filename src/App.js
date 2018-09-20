@@ -7,6 +7,7 @@ import store from './store';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import RestaurantDetails from './components/restuarant/restuarantDetails';
+import  SearchRestuarantsList from './components/restuarant/searchResturantsList';
 
 import './App.css';
 
@@ -23,6 +24,9 @@ class App extends Component {
               </Switch>
               <Switch>
               <Route exact path="/restaurant/:id" component={RestaurantDetails} />
+              </Switch>
+              <Switch>
+              <Route exact path="/restaurants" component={SearchRestuarantsList} />
               </Switch>
             </div>
           </div>

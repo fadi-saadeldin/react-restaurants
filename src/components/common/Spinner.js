@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { BounceLoader, FadeLoader } from 'react-spinners';
+import React from 'react';
+import {  FadeLoader } from 'react-spinners';
 
 const Spinner = ({ loading }) => {
     return (
         <div className='sweet-loading'>
             <FadeLoader
-                color={'red'}
+                color={'#ccc'}
                 loading={loading}
             />
         </div>

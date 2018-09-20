@@ -9,7 +9,7 @@ import {
 const initialState = {
   restaurantsList: [],
   loading: false,
-  restaurantsDetails: [],
+  restaurantDetails: [],
 };
 
 export default function (state = initialState, action) {
@@ -28,13 +28,13 @@ export default function (state = initialState, action) {
     case CLEAR_RESTAURANT_DETAILS:
       return {
         ...state,
-        restaurantsDetails: [],
+        restaurantDetails: [],
         loading: true
       }
     case RESTAURANT_DETAILS:
       return {
         ...state,
-        restaurantsDetails: action.payload,
+        restaurantDetails: action.payload,
         loading: false
       };
 
