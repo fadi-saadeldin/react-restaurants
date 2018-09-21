@@ -3,7 +3,7 @@ import {  FadeLoader } from 'react-spinners';
 
 const Spinner = ({ loading }) => {
     return (
-        <div className='sweet-loading'>
+        <div className='loading'>
             <FadeLoader
                 color={'#ccc'}
                 loading={loading}

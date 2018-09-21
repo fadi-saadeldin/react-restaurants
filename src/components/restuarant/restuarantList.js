@@ -45,7 +45,6 @@ class RestuarantList extends Component {
   }
 // on change sort by filter
   onSortChange(event) {
-    console.log(this.props.restaurantsList);
     this.setState({ sortValue: event.target.value });
     if (event.target.value === 'rating') {
       this.props.history.push(

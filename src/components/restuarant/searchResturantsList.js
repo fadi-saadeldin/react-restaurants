@@ -50,7 +50,7 @@ class SearchResturantsList extends Component {
     )
     this.setState({ categoriesList: _.uniq(categories) })
   }
-  // on get category filter
+  // get category filter from url
   onSearchFilter(value) {
     let filtered_restaurants = [];
     filterValue = value;
@@ -107,7 +107,7 @@ class SearchResturantsList extends Component {
     }
   }
 
-  // on change sort filter
+  // on get sort filter from url
   onSearchSort(value) {
     sortValue = value;
     if (value === 'rating') {
